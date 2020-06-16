@@ -1,6 +1,6 @@
 # Ilaris Bot
 
-This is a Discord dice bot for the fan-made Ilaris rule variant of the pen and paper rpg "The Dark Eye"
+This is a Discord dice bot for the fan-made Ilaris rule variant of the pen and paper rpg "The Dark Eye" (See https://ilarisblog.wordpress.com/)
 
 ![Example](images/example.png)
 

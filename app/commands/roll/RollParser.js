@@ -1,4 +1,4 @@
-// Generated from C:/Users/Fabian/OneDrive/WebstormProjects/discord-bot-ilaris/grammer\Roll.g4 by ANTLR 4.8
+// Generated from C:/Users/Fabian/OneDrive/WebstormProjects/discord-bot-ilaris/grammar\Roll.g4 by ANTLR 4.8
 // jshint ignore: start
 var antlr4 = require('antlr4/index');
 var RollVisitor = require('./RollVisitor').RollVisitor;
