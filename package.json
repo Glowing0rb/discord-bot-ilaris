@@ -1,0 +1,23 @@
+{
+  "name": "discord-bot-ilaris",
+  "version": "1.0.0",
+  "description": "Discord bot for Ilaris",
+  "main": "app/index.js",
+  "scripts": {
+    "test": "mocha --recursive"
+  },
+  "author": {
+    "email": "",
+    "name": "Fabian Nicolay"
+  },
+  "mail": "",
+  "dependencies": {
+    "antlr4": "^4.8.0",
+    "discord.js": "^11.6.4",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "mocha": "^8.0.1",
+    "sinon": "^9.0.2"
+  }
+}
