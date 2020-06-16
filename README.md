@@ -1,6 +1,8 @@
 # Ilaris Bot
 
-This is a Discord dice bot for the fan-made Ilaris rule variant of the 
+This is a Discord dice bot for the fan-made Ilaris rule variant of the pen and paper rpg "The Dark Eye"
+
+![Example](images/example.png)
 
 ## Prerequisites:
 
@@ -14,7 +16,7 @@ This is a Discord dice bot for the fan-made Ilaris rule variant of the
 
 1. Create a file ".env" on root of this project (next to this file)
 2. In the ".env" file put the following:
-    TOKEN=YourBotTokenHere
+    `TOKEN=YourBotTokenHere`
 3. Replace YourBotTokenHere with the token of your discord bot (See https://discordjs.guide/preparations/setting-up-a-bot-application.html#your-token)
 4. run `npm install` to install required dependencies
 5. (optional) run `npm test` to verify the local installation
@@ -37,3 +39,4 @@ n can be omitted and will default to 3.
 m can be omitted and will default to 20. i.e. `r i` is the same as `r 3i20`. This could be used for quickly rolling default ilaris checks.
 
 Additionally, fixed values can be added (e.g. `r 4i + 8`). This could be used to apply a bonus to a check. 
+
