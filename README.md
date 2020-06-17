@@ -45,4 +45,4 @@ Additionally, fixed values can be added (e.g. `r 4i + 8`). This could be used to
 ### Checks
 You can use comparison operators (>, >=, <, <=, ==) to automatically do skills checks, both against fixed values as well as other rolls.
 
-e.g. `i + 8 >= 16' or `i + 12 >= i + 10'  
+e.g. `i + 8 >= 16' or `i + 12 >= i + 10`  
