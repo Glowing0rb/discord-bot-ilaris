@@ -42,5 +42,11 @@ RollVisitor.prototype.visitNumber = function(ctx) {
 };
 
 
+// Visit a parse tree produced by RollParser#check.
+RollVisitor.prototype.visitCheck = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
 
 exports.RollVisitor = RollVisitor;

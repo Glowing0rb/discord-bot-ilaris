@@ -9,11 +9,13 @@ const DEFAULT_NUM_SIDES = 20;
 
 const MARKER_CRIT = " :trophy:";
 const MARKER_FUMBLE  = " :skull_crossbones:";
+const SUCCESS = ":white_check_mark:";
+const FAIL = ":x:";
 
 class Visitor extends RollVisitor {
 
     visitStart(ctx) {
-        return this.visit(ctx.roll());
+        return this.visit(ctx.children[0]);
     }
 
     visitConstant(ctx) {
@@ -55,6 +57,27 @@ class Visitor extends RollVisitor {
             return rollIlaris(numDice?numDice:DEFAULT_NUM_ILARIS_DICE , numSides?numSides:DEFAULT_NUM_SIDES);
         } else {
             return rollDice(numDice?numDice:DEFAULT_NUM_DICE , numSides?numSides:DEFAULT_NUM_SIDES);
+        }
+    }
+
+    visitCheck(ctx) {
+        const left = this.visit(ctx.left);
+        const right = this.visit(ctx.right);
+        const op = ctx.op.text;
+
+        let bSuccess;
+        switch (ctx.op.type) {
+            case RollParser.GT: bSuccess = left.value > right.value; break;
+            case RollParser.LT: bSuccess = left.value < right.value; break;
+            case RollParser.GE: bSuccess = left.value >= right.value; break;
+            case RollParser.LE: bSuccess = left.value <= right.value; break;
+            case RollParser.EQ: bSuccess = left.value === right.value; break;
+        }
+
+        return {
+            message: left.message + op + right.message,
+            value: bSuccess?SUCCESS:FAIL,
+            command: left.command + op + right.command
         }
     }
 }
