@@ -3,7 +3,7 @@ grammar Roll;
 start: (check|roll) EOF;
 
 roll:    numDice=number? op=(ILLARIS_DICE|DEFAULT_DICE) numSides=number? #RollDice
-        | left=roll op=(ADD|SUB) right=number #BonusMalus
+        | left=roll op=(ADD|SUB) right=roll #BonusMalus
         | number #Constant
         ;
 

@@ -34,6 +34,12 @@ describe('Roll Command', () => {
             constructExpectedAnswer("1d20", "[**11**]", 11));
     });
 
+    it('should roll add 2 1i20', () => {
+        assert.strictEqual(
+            fudgeRoll("1i + 1i", [7,6]),
+            constructExpectedAnswer("1i20+1i20", "[**7**]+[**6**]", 13));
+    });
+
     it('should roll 3d20', () => {
         assert.strictEqual(
             fudgeRoll("3d20", [3, 1, 4]),

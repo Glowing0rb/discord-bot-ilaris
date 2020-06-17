@@ -28,8 +28,8 @@ var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
     "\u0002\u0002\u0002\u0017\u001a\u0003\u0002\u0002\u0002\u0018\u001a\u0005",
     "\u0006\u0004\u0002\u0019\u0010\u0003\u0002\u0002\u0002\u0019\u0018\u0003",
     "\u0002\u0002\u0002\u001a \u0003\u0002\u0002\u0002\u001b\u001c\f\u0004",
-    "\u0002\u0002\u001c\u001d\t\u0003\u0002\u0002\u001d\u001f\u0005\u0006",
-    "\u0004\u0002\u001e\u001b\u0003\u0002\u0002\u0002\u001f\"\u0003\u0002",
+    "\u0002\u0002\u001c\u001d\t\u0003\u0002\u0002\u001d\u001f\u0005\u0004",
+    "\u0003\u0005\u001e\u001b\u0003\u0002\u0002\u0002\u001f\"\u0003\u0002",
     "\u0002\u0002 \u001e\u0003\u0002\u0002\u0002 !\u0003\u0002\u0002\u0002",
     "!\u0005\u0003\u0002\u0002\u0002\" \u0003\u0002\u0002\u0002#$\u0007\u0005",
     "\u0002\u0002$\u0007\u0003\u0002\u0002\u0002%&\u0005\u0004\u0003\u0002",
@@ -257,7 +257,7 @@ function BonusMalusContext(parser, ctx) {
 	RollContext.call(this, parser);
     this.left = null; // RollContext;
     this.op = null; // Token;
-    this.right = null; // NumberContext;
+    this.right = null; // RollContext;
     RollContext.prototype.copyFrom.call(this, ctx);
     return this;
 }
@@ -267,12 +267,15 @@ BonusMalusContext.prototype.constructor = BonusMalusContext;
 
 RollParser.BonusMalusContext = BonusMalusContext;
 
-BonusMalusContext.prototype.roll = function() {
-    return this.getTypedRuleContext(RollContext,0);
-};
-
-BonusMalusContext.prototype.number = function() {
-    return this.getTypedRuleContext(NumberContext,0);
+BonusMalusContext.prototype.roll = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(RollContext);
+    } else {
+        return this.getTypedRuleContext(RollContext,i);
+    }
 };
 
 BonusMalusContext.prototype.ADD = function() {
@@ -379,7 +382,7 @@ RollParser.prototype.roll = function(_p) {
                     this.consume();
                 }
                 this.state = 27;
-                localctx.right = this.number(); 
+                localctx.right = this.roll(3); 
             }
             this.state = 32;
             this._errHandler.sync(this);

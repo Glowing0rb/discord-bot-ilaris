@@ -91,10 +91,10 @@ function rollIlaris(numDice= 3, numSides= 20 ) {
     }
 
     let result;
-    if (numDice > 1) {
+    if (numDice > 2) {
         result = results.sort(sortDescending)[1];
         results[1] = `**${results[1]}**`
-    } else {
+    } else { // if one or two illaris dice are thrown, take the best one
         result = results[0];
         results[0] = `**${results[0]}**`
     }
