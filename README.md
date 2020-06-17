@@ -31,6 +31,8 @@ This is a Discord dice bot for the fan-made Ilaris rule variant of the pen and p
 
 The bot reacts to chat messages that consist of the single letter r followed by a space and dice instructions.
 E.g. `r d20` to roll a simple 20-sided die.
+
+### Rolls
 Supported rolling instructions are:
 1. ndm (e.g. `r 3d20`), this will roll n m-sided dice. n can be omitted and will default to 1.
 m can be omitted and will default to 20. i.e. `r d` is the same as `r 1d20`. This could be used for quickly rolling attacks.
@@ -40,3 +42,7 @@ m can be omitted and will default to 20. i.e. `r i` is the same as `r 3i20`. Thi
 
 Additionally, fixed values can be added (e.g. `r 4i + 8`). This could be used to apply a bonus to a check. 
 
+### Checks
+You can use comparison operators (>, >=, <, <=, ==) to automatically do skills checks, both against fixed values as well as other rolls.
+
+e.g. `i + 8 >= 16' or `i + 12 >= i + 10'  
