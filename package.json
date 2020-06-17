@@ -8,7 +8,6 @@
     "start": "node app"
   },
   "author": {
-    "email": "",
     "name": "Fabian Nicolay"
   },
   "license": "MIT",
