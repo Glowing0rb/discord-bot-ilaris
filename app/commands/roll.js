@@ -12,6 +12,8 @@ const MARKER_FUMBLE  = " :skull_crossbones:";
 const SUCCESS = ":white_check_mark:";
 const FAIL = ":x:";
 
+const TOO_LONG = "this is a bit too much for me!";
+
 class Visitor extends RollVisitor {
 
     visitStart(ctx) {
@@ -52,6 +54,12 @@ class Visitor extends RollVisitor {
     visitRollDice(ctx) {
         const numDice = ctx.numDice ? this.visit(ctx.numDice).value : undefined;
         const numSides = ctx.numSides ? this.visit(ctx.numSides).value : undefined;
+
+        if (numDice > 100 || numSides > 1000) {
+            throw {
+                message: TOO_LONG
+            }
+        }
 
         if (ctx.op.type === RollParser.ILLARIS_DICE) {
             return rollIlaris(numDice?numDice:DEFAULT_NUM_ILARIS_DICE , numSides?numSides:DEFAULT_NUM_SIDES);
@@ -148,7 +156,8 @@ function sortDescending(a, b){
 }
 
 module.exports = {
-    name: "r",
+    name: "roll",
+    aliases: ["r", "/roll", "/r"],
     description: "rolls dice",
     execute(msg, args) {
         const chars = new antlr4.InputStream(args);
@@ -157,7 +166,9 @@ module.exports = {
         const parser = new RollParser(tokens);
         const oErrorListener = new antlr4.error.ErrorListener();
         let valid = true;
-        oErrorListener.syntaxError = (recognizer, offendingSymbol, line, column, msg, e) => {
+
+        //syntaxError = (recognizer, offendingSymbol, line, column, msg, e)
+        oErrorListener.syntaxError = () => {
             valid = false;
         };
         parser.addErrorListener(oErrorListener);
@@ -165,8 +176,27 @@ module.exports = {
         const tree = parser.start();
 
         if (valid)  {
-            const result = new Visitor().visit(tree);
-            msg.reply(`${result.command} rolled to ${result.message} = **${result.value}**`);
+
+            try {
+                const result = new Visitor().visit(tree);
+                const reply = `${result.command} rolled to ${result.message} = **${result.value}**`;
+
+                if (reply.length <= 1500) {
+                    msg.reply(reply);
+                } else {
+                    msg.reply(TOO_LONG);
+                }
+
+
+
+            } catch (e) {
+                if (e.message) {
+                    msg.reply(e.message);
+                } else {
+                    throw e;
+                }
+            }
+
         } else {
             msg.reply(`I'm not sure how I should roll "${args}"` );
         }

@@ -6,6 +6,11 @@ const botCommands = require("./commands");
 
 Object.keys(botCommands).map(key => {
     bot.commands.set(botCommands[key].name, botCommands[key]);
+    if (Array.isArray(botCommands[key].aliases)) {
+        for (const alias of botCommands[key].aliases) {
+            bot.commands.set(alias, botCommands[key]);
+        }
+    }
 });
 
 const TOKEN = process.env.TOKEN;

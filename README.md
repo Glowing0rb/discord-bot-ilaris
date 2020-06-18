@@ -29,7 +29,7 @@ This is a Discord dice bot for the fan-made Ilaris rule variant of the pen and p
 
 ## Using the bot
 
-The bot reacts to chat messages that consist of the single letter r followed by a space and dice instructions.
+The bot reacts to chat messages that consist of the single letter `r` (or `roll`, `/r` or `/roll`) followed by a space and dice instructions.
 E.g. `r d20` to roll a simple 20-sided die.
 Supported rolling instructions are:
 1. ndm (e.g. `r 3d20`), this will roll n m-sided dice. n can be omitted and will default to 1.
