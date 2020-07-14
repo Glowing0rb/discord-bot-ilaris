@@ -52,6 +52,25 @@ describe('Roll Command', () => {
             constructExpectedAnswer("3i20+9", "[4,**3**,1]+9", 12));
     });
 
+    it('should roll 1s', () => {
+        assert.strictEqual(
+            fudgeRoll("1s", [3], 6),
+            constructExpectedAnswer("1s6", "[3]", 0));
+    });
+
+    it('should roll 5s', () => {
+        assert.strictEqual(
+            fudgeRoll("5s", [3,1,1,5,6], 6),
+            constructExpectedAnswer("5s6", "[3,__1__,__1__,**5**,**6**]", 2));
+    });
+
+    it('should detect a glitch while rolling 5s', () => {
+        assert.strictEqual(
+            fudgeRoll("5s", [1,1,1,5,6], 6),
+            constructExpectedAnswer("5s6", "[__1__,__1__,__1__,**5**,**6**] :interrobang:" , 2));
+    });
+
+
     it('should compare two static numbers', () => {
         assert.strictEqual(
             doRoll("42>13"),

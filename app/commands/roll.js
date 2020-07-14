@@ -6,9 +6,11 @@ const RollVisitor = require("./roll/RollVisitor.js").RollVisitor;
 const DEFAULT_NUM_DICE = 1;
 const DEFAULT_NUM_ILARIS_DICE = 3;
 const DEFAULT_NUM_SIDES = 20;
+const DEFAULT_NUM_SHADOWRUN_SIDES = 6;
 
 const MARKER_CRIT = " :trophy:";
 const MARKER_FUMBLE  = " :skull_crossbones:";
+const MARKER_GLITCH = " :interrobang:"
 const SUCCESS = ":white_check_mark:";
 const FAIL = ":x:";
 
@@ -62,9 +64,11 @@ class Visitor extends RollVisitor {
         }
 
         if (ctx.op.type === RollParser.ILLARIS_DICE) {
-            return rollIlaris(numDice?numDice:DEFAULT_NUM_ILARIS_DICE , numSides?numSides:DEFAULT_NUM_SIDES);
+            return rollIlaris(numDice ? numDice : DEFAULT_NUM_ILARIS_DICE, numSides ? numSides : DEFAULT_NUM_SIDES);
+        } else if (ctx.op.type === RollParser.SHADOWRUN_DICE) {
+            return rollShadowrun(numDice ? numDice : DEFAULT_NUM_DICE, numSides ? numSides : DEFAULT_NUM_SHADOWRUN_SIDES)
         } else {
-            return rollDice(numDice?numDice:DEFAULT_NUM_DICE , numSides?numSides:DEFAULT_NUM_SIDES);
+            return rollDice(numDice ? numDice : DEFAULT_NUM_DICE, numSides ? numSides : DEFAULT_NUM_SIDES);
         }
     }
 
@@ -120,6 +124,37 @@ function rollIlaris(numDice= 3, numSides= 20 ) {
         message: `[${results}]${marker}`,
         value: result,
         command: `${numDice}i${numSides}`
+    }
+}
+
+function rollShadowrun(numDice= 1, numSides= 6 ) {
+    let results = [];
+    let hits = 0;
+    let ones = 0;
+
+
+    for (let i = 0; i < numDice; i++) {
+        const diceRoll = Math.floor(Math.random() * numSides) + 1
+        if (diceRoll >= 5) {
+            hits++;
+            results.push(`**${diceRoll}**`);
+        } else if (diceRoll === 1) {
+            ones++;
+            results.push(`__${diceRoll}__`);
+        } else {
+            results.push(`${diceRoll}`);
+        }
+    }
+
+    let marker = "";
+        if (ones > numDice/2) {
+            marker = MARKER_GLITCH;
+        }
+
+    return  {
+        message: `[${results.toString()}]${marker}`,
+        value: hits,
+        command: `${numDice}s${numSides}`
     }
 }
 

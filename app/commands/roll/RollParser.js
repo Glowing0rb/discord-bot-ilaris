@@ -7,34 +7,34 @@ var grammarFileName = "Roll.g4";
 
 
 var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
-    "\u0003\r*\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t\u0004",
-    "\u0004\u0005\t\u0005\u0003\u0002\u0003\u0002\u0005\u0002\r\n\u0002\u0003",
-    "\u0002\u0003\u0002\u0003\u0003\u0003\u0003\u0005\u0003\u0013\n\u0003",
-    "\u0003\u0003\u0003\u0003\u0005\u0003\u0017\n\u0003\u0003\u0003\u0005",
-    "\u0003\u001a\n\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0007\u0003",
-    "\u001f\n\u0003\f\u0003\u000e\u0003\"\u000b\u0003\u0003\u0004\u0003\u0004",
-    "\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0002\u0003",
-    "\u0004\u0006\u0002\u0004\u0006\b\u0002\u0005\u0003\u0002\u0003\u0004",
-    "\u0003\u0002\u0006\u0007\u0003\u0002\t\r\u0002*\u0002\f\u0003\u0002",
-    "\u0002\u0002\u0004\u0019\u0003\u0002\u0002\u0002\u0006#\u0003\u0002",
-    "\u0002\u0002\b%\u0003\u0002\u0002\u0002\n\r\u0005\b\u0005\u0002\u000b",
-    "\r\u0005\u0004\u0003\u0002\f\n\u0003\u0002\u0002\u0002\f\u000b\u0003",
-    "\u0002\u0002\u0002\r\u000e\u0003\u0002\u0002\u0002\u000e\u000f\u0007",
-    "\u0002\u0002\u0003\u000f\u0003\u0003\u0002\u0002\u0002\u0010\u0012\b",
-    "\u0003\u0001\u0002\u0011\u0013\u0005\u0006\u0004\u0002\u0012\u0011\u0003",
-    "\u0002\u0002\u0002\u0012\u0013\u0003\u0002\u0002\u0002\u0013\u0014\u0003",
-    "\u0002\u0002\u0002\u0014\u0016\t\u0002\u0002\u0002\u0015\u0017\u0005",
-    "\u0006\u0004\u0002\u0016\u0015\u0003\u0002\u0002\u0002\u0016\u0017\u0003",
-    "\u0002\u0002\u0002\u0017\u001a\u0003\u0002\u0002\u0002\u0018\u001a\u0005",
-    "\u0006\u0004\u0002\u0019\u0010\u0003\u0002\u0002\u0002\u0019\u0018\u0003",
-    "\u0002\u0002\u0002\u001a \u0003\u0002\u0002\u0002\u001b\u001c\f\u0004",
-    "\u0002\u0002\u001c\u001d\t\u0003\u0002\u0002\u001d\u001f\u0005\u0004",
-    "\u0003\u0005\u001e\u001b\u0003\u0002\u0002\u0002\u001f\"\u0003\u0002",
-    "\u0002\u0002 \u001e\u0003\u0002\u0002\u0002 !\u0003\u0002\u0002\u0002",
-    "!\u0005\u0003\u0002\u0002\u0002\" \u0003\u0002\u0002\u0002#$\u0007\u0005",
-    "\u0002\u0002$\u0007\u0003\u0002\u0002\u0002%&\u0005\u0004\u0003\u0002",
-    "&\'\t\u0004\u0002\u0002\'(\u0005\u0004\u0003\u0002(\t\u0003\u0002\u0002",
-    "\u0002\u0007\f\u0012\u0016\u0019 "].join("");
+    "\u0003\u000e*\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
+    "\u0004\u0004\u0005\t\u0005\u0003\u0002\u0003\u0002\u0005\u0002\r\n\u0002",
+    "\u0003\u0002\u0003\u0002\u0003\u0003\u0003\u0003\u0005\u0003\u0013\n",
+    "\u0003\u0003\u0003\u0003\u0003\u0005\u0003\u0017\n\u0003\u0003\u0003",
+    "\u0005\u0003\u001a\n\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0007",
+    "\u0003\u001f\n\u0003\f\u0003\u000e\u0003\"\u000b\u0003\u0003\u0004\u0003",
+    "\u0004\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0002",
+    "\u0003\u0004\u0006\u0002\u0004\u0006\b\u0002\u0005\u0003\u0002\u0003",
+    "\u0005\u0003\u0002\u0007\b\u0003\u0002\n\u000e\u0002*\u0002\f\u0003",
+    "\u0002\u0002\u0002\u0004\u0019\u0003\u0002\u0002\u0002\u0006#\u0003",
+    "\u0002\u0002\u0002\b%\u0003\u0002\u0002\u0002\n\r\u0005\b\u0005\u0002",
+    "\u000b\r\u0005\u0004\u0003\u0002\f\n\u0003\u0002\u0002\u0002\f\u000b",
+    "\u0003\u0002\u0002\u0002\r\u000e\u0003\u0002\u0002\u0002\u000e\u000f",
+    "\u0007\u0002\u0002\u0003\u000f\u0003\u0003\u0002\u0002\u0002\u0010\u0012",
+    "\b\u0003\u0001\u0002\u0011\u0013\u0005\u0006\u0004\u0002\u0012\u0011",
+    "\u0003\u0002\u0002\u0002\u0012\u0013\u0003\u0002\u0002\u0002\u0013\u0014",
+    "\u0003\u0002\u0002\u0002\u0014\u0016\t\u0002\u0002\u0002\u0015\u0017",
+    "\u0005\u0006\u0004\u0002\u0016\u0015\u0003\u0002\u0002\u0002\u0016\u0017",
+    "\u0003\u0002\u0002\u0002\u0017\u001a\u0003\u0002\u0002\u0002\u0018\u001a",
+    "\u0005\u0006\u0004\u0002\u0019\u0010\u0003\u0002\u0002\u0002\u0019\u0018",
+    "\u0003\u0002\u0002\u0002\u001a \u0003\u0002\u0002\u0002\u001b\u001c",
+    "\f\u0004\u0002\u0002\u001c\u001d\t\u0003\u0002\u0002\u001d\u001f\u0005",
+    "\u0004\u0003\u0005\u001e\u001b\u0003\u0002\u0002\u0002\u001f\"\u0003",
+    "\u0002\u0002\u0002 \u001e\u0003\u0002\u0002\u0002 !\u0003\u0002\u0002",
+    "\u0002!\u0005\u0003\u0002\u0002\u0002\" \u0003\u0002\u0002\u0002#$\u0007",
+    "\u0006\u0002\u0002$\u0007\u0003\u0002\u0002\u0002%&\u0005\u0004\u0003",
+    "\u0002&\'\t\u0004\u0002\u0002\'(\u0005\u0004\u0003\u0002(\t\u0003\u0002",
+    "\u0002\u0002\u0007\f\u0012\u0016\u0019 "].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -43,11 +43,12 @@ var decisionsToDFA = atn.decisionToState.map( function(ds, index) { return new a
 
 var sharedContextCache = new antlr4.PredictionContextCache();
 
-var literalNames = [ null, null, null, null, "'+'", "'-'", null, "'>='", 
+var literalNames = [ null, null, null, null, null, "'+'", "'-'", null, "'>='", 
                      "'<='", "'>'", "'<'", "'=='" ];
 
-var symbolicNames = [ null, "ILLARIS_DICE", "DEFAULT_DICE", "INT", "ADD", 
-                      "SUB", "WS", "GE", "LE", "GT", "LT", "EQ" ];
+var symbolicNames = [ null, "SHADOWRUN_DICE", "ILLARIS_DICE", "DEFAULT_DICE", 
+                      "INT", "ADD", "SUB", "WS", "GE", "LE", "GT", "LT", 
+                      "EQ" ];
 
 var ruleNames =  [ "start", "roll", "number", "check" ];
 
@@ -70,17 +71,18 @@ Object.defineProperty(RollParser.prototype, "atn", {
 });
 
 RollParser.EOF = antlr4.Token.EOF;
-RollParser.ILLARIS_DICE = 1;
-RollParser.DEFAULT_DICE = 2;
-RollParser.INT = 3;
-RollParser.ADD = 4;
-RollParser.SUB = 5;
-RollParser.WS = 6;
-RollParser.GE = 7;
-RollParser.LE = 8;
-RollParser.GT = 9;
-RollParser.LT = 10;
-RollParser.EQ = 11;
+RollParser.SHADOWRUN_DICE = 1;
+RollParser.ILLARIS_DICE = 2;
+RollParser.DEFAULT_DICE = 3;
+RollParser.INT = 4;
+RollParser.ADD = 5;
+RollParser.SUB = 6;
+RollParser.WS = 7;
+RollParser.GE = 8;
+RollParser.LE = 9;
+RollParser.GT = 10;
+RollParser.LT = 11;
+RollParser.EQ = 12;
 
 RollParser.RULE_start = 0;
 RollParser.RULE_roll = 1;
@@ -211,6 +213,10 @@ RollDiceContext.prototype.DEFAULT_DICE = function() {
     return this.getToken(RollParser.DEFAULT_DICE, 0);
 };
 
+RollDiceContext.prototype.SHADOWRUN_DICE = function() {
+    return this.getToken(RollParser.SHADOWRUN_DICE, 0);
+};
+
 RollDiceContext.prototype.number = function(i) {
     if(i===undefined) {
         i = null;
@@ -328,7 +334,7 @@ RollParser.prototype.roll = function(_p) {
             this.state = 18;
             localctx.op = this._input.LT(1);
             _la = this._input.LA(1);
-            if(!(_la===RollParser.ILLARIS_DICE || _la===RollParser.DEFAULT_DICE)) {
+            if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << RollParser.SHADOWRUN_DICE) | (1 << RollParser.ILLARIS_DICE) | (1 << RollParser.DEFAULT_DICE))) !== 0))) {
                 localctx.op = this._errHandler.recoverInline(this);
             }
             else {

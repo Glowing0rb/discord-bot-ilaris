@@ -39,6 +39,9 @@ m can be omitted and will default to 20. i.e. `r d` is the same as `r 1d20`. Thi
 2. nim (e.g. `r 3i20`), this will roll n m-sided dice, but in ilaris-style (only the second highest die counts)
 n can be omitted and will default to 3.
 m can be omitted and will default to 20. i.e. `r i` is the same as `r 3i20`. This could be used for quickly rolling default ilaris checks.
+3. nsm (e.g. `r 3s6`), this will roll n m-sided dice, but in shadowrun(5)-style (all dice greater than 4 count as hit).
+n can be omitted and will default to 1.
+m can (and usually should) be omitted and will default to 6. i.e. `r s` is the same as `r 1s6`.
 
 Additionally, fixed values can be added (e.g. `r 4i + 8`). This could be used to apply a bonus to a check. 
 
