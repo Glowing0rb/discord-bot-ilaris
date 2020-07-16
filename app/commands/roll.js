@@ -194,7 +194,8 @@ module.exports = {
     name: "roll",
     aliases: ["r", "/roll", "/r"],
     description: "rolls dice",
-    execute(msg, args) {
+    isDefault: true,
+    execute(msg, args, ignoreOnInvalidSyntax  = false) {
         const chars = new antlr4.InputStream(args);
         const lexer = new RollLexer(chars);
         const tokens  = new antlr4.CommonTokenStream(lexer);
@@ -215,6 +216,7 @@ module.exports = {
             try {
                 const result = new Visitor().visit(tree);
                 const reply = `${result.command} rolled to ${result.message} = **${result.value}**`;
+                console.log(reply);
 
                 if (reply.length <= 1500) {
                     msg.reply(reply);
@@ -222,18 +224,19 @@ module.exports = {
                     msg.reply(TOO_LONG);
                 }
 
-
-
             } catch (e) {
                 if (e.message) {
                     msg.reply(e.message);
-                } else {
-                    throw e;
                 }
+                throw e;
             }
 
         } else {
-            msg.reply(`I'm not sure how I should roll "${args}"` );
+            if (!ignoreOnInvalidSyntax) {
+                msg.reply(`I'm not sure how I should roll "${args}"`);
+                throw `Invalid syntax "${args}"`
+            }
+
         }
     }
 
