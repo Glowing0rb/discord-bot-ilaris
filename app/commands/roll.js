@@ -16,6 +16,7 @@ const FAIL = ":x:";
 
 const TOO_LONG = "this is a bit too much for me!";
 
+const GM = require("./gm")
 class Visitor extends RollVisitor {
 
     visitStart(ctx) {
@@ -292,7 +293,6 @@ module.exports = {
         const tree = parser.start();
 
         if (valid) {
-
             try {
                 const result = new Visitor().visit(tree);
                 const reply = `${result.command} rolled to ${result.message} = **${result.value}**`;
@@ -303,6 +303,13 @@ module.exports = {
                 } else {
                     msg.reply(TOO_LONG);
                 }
+
+                const activeChannel = GM.getActiveChannel(msg.author.id);
+
+                if (activeChannel && GM.isGM(activeChannel.id, msg.author.id,) && !GM.isActiveGM(msg.channel.id, msg.author.id)) {
+                    activeChannel.send("The Game Master is rolling dice in secret");
+                }
+
 
             } catch (e) {
                 if (e.message) {
