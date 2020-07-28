@@ -10,7 +10,7 @@ module.exports = {
     },
 
     isGM(channelId, userId) {
-      return channels[channelId] && channels[channelId].gmid === userId;
+        return channels[channelId] && channels[channelId].gmid === userId;
     },
 
     getActiveChannel(userId) {
@@ -20,7 +20,7 @@ module.exports = {
         }
 
         const channel = channels[gm.activeChannelId];
-        return channel? channel.channel : null;
+        return channel ? channel.channel : null;
     },
 
     execute(msg, args) {
@@ -63,7 +63,7 @@ module.exports = {
                 break;
             default:
                 if (currentGMId) {
-                    msg.reply(`${gms[currentGMId]} is Game Master on this channel`);
+                    msg.reply(`${gms[currentGMId].username} is Game Master on this channel`);
                 } else {
                     msg.reply(`This channel has no Game Master`);
                 }
