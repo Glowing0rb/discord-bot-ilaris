@@ -36,18 +36,22 @@ The bot also reacts to dice instructions without the preceding command (e.g.  ju
 
 ### Rolls
 Supported rolling instructions are:
-1. ndm (e.g. `r 3d20`), this will roll n m-sided dice. n can be omitted and will default to 1.
-m can be omitted and will default to 20. i.e. `r d` is the same as `r 1d20`. This could be used for quickly rolling attacks.
-2. nim (e.g. `r 3i20`), this will roll n m-sided dice, but in ilaris-style (only the second highest die counts)
+* ndm (e.g. `r 3d20`), this will roll n m-sided dice. n can be omitted and will default to 1.
+m can be omitted and will default to 20. i.e. `r d` is the same as `r 1d20`. This could be used for quickly rolling attacks. Alternative alias is nwm.
+* nim (e.g. `r 3i20`), this will roll n m-sided dice, but in ilaris-style (only the second highest die counts)
 n can be omitted and will default to 3.
 m can be omitted and will default to 20. i.e. `r i` is the same as `r 3i20`. This could be used for quickly rolling default ilaris checks.
-3. nsm (e.g. `r 3s6`), this will roll n m-sided dice, but in shadowrun(5)-style (all dice greater than 4 count as hit).
+* nsm (e.g. `r 3s6`), this will roll n m-sided dice, but in shadowrun(5)-style (all dice greater than 4 count as hit).
 n can be omitted and will default to 1.
 m can (and usually should) be omitted and will default to 6. i.e. `r s` is the same as `r 1s6`.
+Additionally, fixed values can be added (e.g. `r 4i + 8`). This could be used to apply a bonus to a check.
 
-Additionally, fixed values can be added (e.g. `r 4i + 8`). This could be used to apply a bonus to a check. 
+#### Special rolls
+Additional the following roll can be performed, but no bonus values can be added 
+* nz (e.g. `r 3z`), this will roll n 20-sided dice and use each die for hit-zone determination according to "The Dark Eye 4.1" rules 
+n can be omitted and will default to 1. Alternative aliases are nh and nt.
 
 ### Checks
-You can use comparison operators (>, >=, <, <=, ==) to automatically do skills checks, both against fixed values as well as other rolls.
+You can use comparison operators (>, >=, <, <=, ==) to automatically do skills checks, against fixed values as well as other rolls.
 
 e.g. `i + 8 >= 16` or `i + 12 >= i + 10`  

@@ -1,4 +1,4 @@
-// Generated from C:/Users/Fabian/OneDrive/WebstormProjects/discord-bot-ilaris/grammar\Roll.g4 by ANTLR 4.8
+// Generated from C:/Users/d047429/IdeaProjects/discord-bot-ilaris/grammar\Roll.g4 by ANTLR 4.8
 // jshint ignore: start
 var antlr4 = require('antlr4/index');
 
@@ -44,6 +44,12 @@ RollVisitor.prototype.visitNumber = function(ctx) {
 
 // Visit a parse tree produced by RollParser#check.
 RollVisitor.prototype.visitCheck = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by RollParser#special.
+RollVisitor.prototype.visitSpecial = function(ctx) {
   return this.visitChildren(ctx);
 };
 
