@@ -1,6 +1,7 @@
 const assert = require("assert");
 const sinon = require("sinon");
-const roll = require("../../app/commands/roll");
+const Roll = require("../../app/commands/roll");
+const GM = require("../../app/commands/gm");
 
 let sandbox;
 const SUCCESS = ":white_check_mark:";
@@ -10,6 +11,24 @@ const ZONE_CHEST = ":shirt: ";
 const ZONE_ARMS = ":muscle: ";
 const ZONE_STOMACH = ":shorts: ";
 const ZONE_LEGS = ":leg: ";
+
+const USER = {
+    id: "u123",
+    username: "User1"
+}
+
+const CHANNEL1  = {
+    id: "c123"
+};
+
+const CHANNEL2  = {
+    text: "",
+    id: "c234",
+    send(message) {
+        this.text = message;
+    }
+};
+
 
 describe("Roll Command", () => {
 
@@ -134,6 +153,15 @@ describe("Roll Command", () => {
             constructExpectedAnswer("3i20+9>=16", "[9,**8**,1]+9>=16", SUCCESS)
         );
     });
+
+    it("should notify active channel about GM rolls", () => {
+        registerAsGMOnSecondChannel();
+        doRoll("d20");
+        assert.strictEqual(
+           CHANNEL2.text,
+           "The Game Master is rolling dice in secret"
+        );
+    });
 });
 
 function fudgeRoll(command, aFakeResults, iNumberOfSides = 20) {
@@ -153,14 +181,31 @@ function doRoll(command) {
         text: "",
         reply(text) {
             this.text = text;
-        }
+        },
+        channel: CHANNEL1,
+        author: USER
     };
 
-    roll.execute(msg, command);
+    Roll.execute(msg, command);
 
     return msg.text;
 }
 
 function constructExpectedAnswer(command, message, value) {
     return `${command} rolled to ${message} = **${value}**`;
+}
+
+function registerAsGMOnSecondChannel() {
+    const msg = {
+        text: "",
+        reply(text) {
+            this.text = text;
+        },
+        channel: CHANNEL2,
+        author: USER
+    };
+
+    GM.execute(msg, "register");
+
+    return msg.text;
 }

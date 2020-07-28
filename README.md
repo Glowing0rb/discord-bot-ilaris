@@ -55,3 +55,13 @@ n can be omitted and will default to 1. Alternative aliases are nh and nt.
 You can use comparison operators (>, >=, <, <=, ==) to automatically do skills checks, against fixed values as well as other rolls.
 
 e.g. `i + 8 >= 16` or `i + 12 >= i + 10`  
+
+## Game Master (GM) Commands
+
+* `gm register` registers the user as GM for the current channel and sets the channel active for the gm.
+* `gm activate` sets the current channel as active for the gm.
+* `gm` displays the GM of the current channel
+
+**Each channel can only have one GM, each GM can only have one active channel**
+
+If a GM rolls dice on a channel that is not their active channel )e.g. via direct messaging or a second channel), the bot will post a notification on the active channel "The GM is rolling dice in secret". This helps to emulate the tension for the players when the GM would roll behind his screen on a real table. 

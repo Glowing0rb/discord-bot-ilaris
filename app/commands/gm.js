@@ -1,5 +1,6 @@
-const channels = {};
-const gms = {};
+let channels = {};
+let gms = {};
+
 module.exports = {
     name: "gm",
     aliases: ["sl", "/gm", "/sl"],
@@ -7,6 +8,11 @@ module.exports = {
 
     isActiveGM(channelId, userId) {
         return this.isGM(channelId, userId) && gms[userId] && gms[userId].activeChannelId === channelId;
+    },
+
+    reset() {
+        channels = {};
+        gms = {};
     },
 
     isGM(channelId, userId) {
