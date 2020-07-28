@@ -1,6 +1,6 @@
 grammar Roll;
 
-start: (check|roll|special) EOF;
+start: (check|multicheck|roll|special) EOF;
 
 roll:    numDice=number? op=(ILARIS_DICE|DEFAULT_DICE|SHADOWRUN_DICE) numSides=number? #RollDice
         | left=roll op=(ADD|SUB) right=roll #BonusMalus
@@ -8,6 +8,8 @@ roll:    numDice=number? op=(ILARIS_DICE|DEFAULT_DICE|SHADOWRUN_DICE) numSides=n
         ;
 
 number: INT;
+
+multicheck: numChecks=number? OPENING_BRACKETS op=check CLOSING_BRACKETS;
 
 check: left=roll op=(GE | LE | GT | LT | EQ) right=roll;
 
@@ -27,3 +29,6 @@ LE : '<=';
 GT : '>';
 LT : '<';
 EQ : '==';
+
+OPENING_BRACKETS : '(';
+CLOSING_BRACKETS : ')';

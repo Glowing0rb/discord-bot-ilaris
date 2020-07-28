@@ -56,6 +56,12 @@ You can use comparison operators (>, >=, <, <=, ==) to automatically do skills c
 
 e.g. `i + 8 >= 16` or `i + 12 >= i + 10`  
 
+#### Multi-Checks
+You can also execute checks multiple times (e.g. for large battles), by putting a check in brackets and prefixing the number of checks.
+
+e.g. `50(i + 8 >= 16)`
+
+
 ## Game Master (GM) Commands
 
 * `gm register` registers the user as GM for the current channel and sets the channel active for the gm.

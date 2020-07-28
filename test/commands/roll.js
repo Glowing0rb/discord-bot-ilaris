@@ -162,6 +162,13 @@ describe("Roll Command", () => {
            "The Game Master is rolling dice in secret"
         );
     });
+
+    it("should do a m multi-check", () => {
+        assert.strictEqual(
+            fudgeRoll("3(1d20 <= 16)", [16, 17, 1]),
+            constructExpectedAnswer("3(1d20<=16)", `[${SUCCESS}:2, ${FAIL}:1]`, "67 %")
+        );
+    });
 });
 
 function fudgeRoll(command, aFakeResults, iNumberOfSides = 20) {

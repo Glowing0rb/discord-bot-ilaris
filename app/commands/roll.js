@@ -111,6 +111,34 @@ class Visitor extends RollVisitor {
         return rollHitzone(numDice);
     }
 
+    visitMulticheck(ctx) {
+        const numChecks = ctx.numChecks ? this.visit(ctx.numChecks).value : 1;
+        const results = [];
+
+        let check;
+
+        for (let i = 0; i < numChecks; i++) {
+            check = this.visit(ctx.op);
+            results.push(check);
+        }
+
+        const numSuccesses = results.reduce((total, current) => {
+            if (current.value === SUCCESS) {
+                return total + 1;
+            } else {
+                return total;
+            }
+        }, 0);
+
+        const numMisses = numChecks - numSuccesses;
+
+        return {
+            message: `[${SUCCESS}:${numSuccesses}, ${FAIL}:${numMisses}]`,
+            value:  `${Math.round(numSuccesses*100.0/numChecks)} %`,
+            command: `${numChecks}(${check.command})`
+        }
+    };
+
 }
 
 function rollIlaris(numDice = 3, numSides = 20) {
@@ -188,7 +216,7 @@ function rollDice(numDice = 3, numSides = 20) {
     if (numDice > 1) {
         result = results.reduce((total, current) => {
             return total + current;
-        });
+        }, 0);
         message = `[${results.join("+")}=**${result}**]`;
     } else {
         result = results[0];
