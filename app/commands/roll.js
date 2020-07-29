@@ -17,6 +17,7 @@ const FAIL = ":x:";
 const TOO_LONG = "this is a bit too much for me!";
 
 const GM = require("./gm")
+
 class Visitor extends RollVisitor {
 
     visitStart(ctx) {
@@ -58,7 +59,7 @@ class Visitor extends RollVisitor {
         const numDice = ctx.numDice ? this.visit(ctx.numDice).value : undefined;
         const numSides = ctx.numSides ? this.visit(ctx.numSides).value : undefined;
 
-        if (numDice > 100 || numSides > 1000) {
+        if (numDice > 1000 || numSides > 1000) {
             throw {
                 message: TOO_LONG
             };
@@ -113,6 +114,13 @@ class Visitor extends RollVisitor {
 
     visitMulticheck(ctx) {
         const numChecks = ctx.numChecks ? this.visit(ctx.numChecks).value : 1;
+
+        if (numChecks > 10000) {
+            throw {
+                message: TOO_LONG
+            };
+        }
+
         const results = [];
 
         let check;
@@ -134,7 +142,7 @@ class Visitor extends RollVisitor {
 
         return {
             message: `[${SUCCESS}:${numSuccesses}, ${FAIL}:${numMisses}]`,
-            value:  `${Math.round(numSuccesses*100.0/numChecks)} %`,
+            value: `${Math.round(numSuccesses * 100.0 / numChecks)} %`,
             command: `${numChecks}(${check.command})`
         }
     };
@@ -277,10 +285,10 @@ function rollHitzone(numDice = 1) {
     let value;
     if (numDice > 1) {
         value = ZONE_HEAD + ": " + hits[ZONE_HEAD] + ", "
-                + ZONE_CHEST + ": " + hits[ZONE_CHEST] + ", "
-                + ZONE_ARMS + ": " + hits[ZONE_ARMS] + ", "
-                + ZONE_STOMACH + ": " + hits[ZONE_STOMACH] + ", "
-                + ZONE_LEGS + ": " + hits[ZONE_ARMS];
+            + ZONE_CHEST + ": " + hits[ZONE_CHEST] + ", "
+            + ZONE_ARMS + ": " + hits[ZONE_ARMS] + ", "
+            + ZONE_STOMACH + ": " + hits[ZONE_STOMACH] + ", "
+            + ZONE_LEGS + ": " + hits[ZONE_ARMS];
     } else {
         value = results[0].zone;
     }
@@ -305,19 +313,27 @@ module.exports = {
     description: "rolls dice",
     isDefault: true,
     execute(msg, args, ignoreOnInvalidSyntax = false) {
-        const chars = new antlr4.InputStream(args);
-        const lexer = new RollLexer(chars);
-        const tokens = new antlr4.CommonTokenStream(lexer);
-        const parser = new RollParser(tokens);
         const oErrorListener = new antlr4.error.ErrorListener();
         let valid = true;
-
         //syntaxError = (recognizer, offendingSymbol, line, column, msg, e)
         oErrorListener.syntaxError = () => {
             valid = false;
         };
+
+        const chars = new antlr4.InputStream(args);
+
+        const lexer = new RollLexer(chars);
+        lexer.removeErrorListeners();
+        lexer.addErrorListener(oErrorListener);
+
+        const tokens = new antlr4.CommonTokenStream(lexer);
+
+        const parser = new RollParser(tokens);
+
+        parser.removeErrorListeners();
         parser.addErrorListener(oErrorListener);
         parser.buildParseTrees = true;
+
         const tree = parser.start();
 
         if (valid) {
@@ -326,11 +342,13 @@ module.exports = {
                 const reply = `${result.command} rolled to ${result.message} = **${result.value}**`;
                 console.log(reply);
 
-                if (reply.length <= 1500) {
-                    msg.reply(reply);
-                } else {
-                    msg.reply(TOO_LONG);
-                }
+                msg.reply(reply,
+                    {
+                        split: {
+                            maxLength: 2000,
+                            char: ''
+                        }
+                    });
 
                 const activeChannel = GM.getActiveChannel(msg.author.id);
 
@@ -343,14 +361,14 @@ module.exports = {
                 if (e.message) {
                     msg.reply(e.message);
                 }
-                throw e;
+                console.log(e);
             }
 
         } else {
             if (!ignoreOnInvalidSyntax) {
                 msg.reply(`I'm not sure how I should roll "${args}"`);
-                throw `Invalid syntax "${args}"`;
             }
+            console.log(`Invalid syntax "${args}"`);
 
         }
     }
