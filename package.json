@@ -1,7 +1,7 @@
 {
   "name": "discord-bot-ilaris",
-  "version": "1.0.0",
-  "description": "Discord bot for Ilaris",
+  "version": "1.2.1",
+  "description": "Discord bot for Ilaris and other RPGs",
   "main": "app/index.js",
   "scripts": {
     "test": "mocha --recursive",

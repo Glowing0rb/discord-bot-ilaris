@@ -2,6 +2,7 @@
 
 This is a Discord dice bot for the fan-made Ilaris rule variant of the pen and paper rpg "The Dark Eye" (See https://ilarisblog.wordpress.com/)
 
+I also contains some special rolls for other RPGs such as "Shadowrun 5" and "The Dark Eye 4.1"
 ![Example](images/example.png)
 
 ## Prerequisites:
