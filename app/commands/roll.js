@@ -201,7 +201,11 @@ function rollShadowrun(numDice = 1, numSides = 6) {
 
     let marker = "";
     if (ones > numDice / 2) {
-        marker = MARKER_GLITCH;
+        if (hits === 0) {
+            marker = MARKER_FUMBLE;
+        } else {
+            marker = MARKER_GLITCH;
+        }
     }
 
     return {
