@@ -10,7 +10,7 @@ It also supports some special rolls for other RPGs such as "Shadowrun 5" and "Th
 1. A Discord account, and a server where you are allowed to invite bots
 2. A registered discord application with a bot user (See https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot)
 3. The bot user must have been added to your server (See https://discordjs.guide/preparations/adding-your-bot-to-servers.html#bot-invite-links)
-4. Node.js
+4. Node.js (at least version v14.10.0 or v12.19.0)
 
 
 ## Installing the bot 
