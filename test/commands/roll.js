@@ -1,5 +1,6 @@
 const assert = require("assert");
 const sinon = require("sinon");
+const crypto = require('crypto');
 const Roll = require("../../app/commands/roll");
 const GM = require("../../app/commands/gm");
 
@@ -84,28 +85,28 @@ describe("Roll Command", () => {
 
     it("should roll 1s", () => {
         assert.strictEqual(
-            fudgeRoll("1s", [3], 6),
+            fudgeRoll("1s", [3]),
             constructExpectedAnswer("1s6", "[3]", 0)
         );
     });
 
     it("should roll 5s", () => {
         assert.strictEqual(
-            fudgeRoll("5s", [3, 1, 1, 5, 6], 6),
+            fudgeRoll("5s", [3, 1, 1, 5, 6]),
             constructExpectedAnswer("5s6", "[3,__1__,__1__,**5**,**6**]", 2)
         );
     });
 
     it("should roll 1z", () => {
         assert.strictEqual(
-            fudgeRoll("1z", [20], 20),
+            fudgeRoll("1z", [20]),
             constructExpectedAnswer("1z", "[20]", ZONE_HEAD)
         );
     });
 
     it("should roll 5z", () => {
         assert.strictEqual(
-            fudgeRoll("5z", [19, 15, 9, 7, 6], 20),
+            fudgeRoll("5z", [19, 15, 9, 7, 6]),
             constructExpectedAnswer(
                 "5z", "[19,15,9,7,6]",
                 ZONE_HEAD + ": 1, " + ZONE_CHEST + ": 1, " + ZONE_ARMS + ": 1, " + ZONE_STOMACH + ": 1, " + ZONE_LEGS + ": 1"
@@ -115,7 +116,7 @@ describe("Roll Command", () => {
 
     it("should detect a glitch while rolling 5s", () => {
         assert.strictEqual(
-            fudgeRoll("5s", [1, 1, 1, 5, 6], 6),
+            fudgeRoll("5s", [1, 1, 1, 5, 6]),
             constructExpectedAnswer("5s6", "[__1__,__1__,__1__,**5**,**6**] :interrobang:", 2)
         );
     });
@@ -171,12 +172,10 @@ describe("Roll Command", () => {
     });
 });
 
-function fudgeRoll(command, aFakeResults, iNumberOfSides = 20) {
-    const stubRandom = sandbox.stub(Math, "random");
+function fudgeRoll(command, aFakeResults) {
+    const stubRandom = sandbox.stub(crypto, "randomInt");
     for (let i = 0; i < aFakeResults.length; i++) {
-        stubRandom.onCall(i).returns((
-            aFakeResults[i] - 1
-        ) / iNumberOfSides);
+        stubRandom.onCall(i).returns(aFakeResults[i]);
     }
     const result = doRoll(command);
     stubRandom.restore();

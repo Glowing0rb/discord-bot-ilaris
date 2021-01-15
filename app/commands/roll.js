@@ -1,4 +1,5 @@
 const antlr4 = require("antlr4/index.js");
+const crypto = require('crypto');
 const RollLexer = require("./roll/RollLexer.js").RollLexer;
 const RollParser = require("./roll/RollParser.js").RollParser;
 const RollVisitor = require("./roll/RollVisitor.js").RollVisitor;
@@ -304,7 +305,7 @@ function rollHitzone(numDice = 1) {
 }
 
 function rollSingleDie(numSides) {
-    return Math.floor(Math.random() * numSides) + 1;
+    return crypto.randomInt(1, numSides + 1);
 }
 
 function sortDescending(a, b) {
@@ -352,7 +353,8 @@ module.exports = {
                             maxLength: 2000,
                             char: ''
                         }
-                    });
+                    }
+                );
 
                 const activeChannel = GM.getActiveChannel(msg.author.id);
 
