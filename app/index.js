@@ -3,6 +3,7 @@ const Discord = require("discord.js");
 const bot = new Discord.Client();
 bot.commands = new Discord.Collection();
 const botCommands = require("./commands");
+const Roll = require("./commands/roll");
 
 let defaultCommand;
 
@@ -24,6 +25,7 @@ bot.login(TOKEN);
 
 bot.on("ready", () => {
     console.info(`Logged in as ${bot.user.tag}!`);
+    Roll.updateLuck(process.env.LUCK_PLAYERS, process.env.LUCK_GM, process.env.LUCK_THRESHOLD);
 });
 
 bot.on("message", msg => {

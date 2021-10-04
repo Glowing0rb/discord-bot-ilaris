@@ -17,6 +17,16 @@ const FAIL = ":x:";
 
 const TOO_LONG = "this is a bit too much for me!";
 
+const LUCK_STATE = {
+    DEFAULT: null,
+    HIGH: "high",
+    LOW: "low"
+}
+
+let playerLuck = LUCK_STATE.DEFAULT;
+let gmLuck = LUCK_STATE.DEFAULT;
+let luckThreshold = 0.5;
+
 const GM = require("./gm")
 
 class Visitor extends RollVisitor {
@@ -67,13 +77,13 @@ class Visitor extends RollVisitor {
         }
 
         if (ctx.op.type === RollParser.ILARIS_DICE) {
-            return rollIlaris(numDice ? numDice : DEFAULT_NUM_ILARIS_DICE, numSides ? numSides : DEFAULT_NUM_SIDES);
+            return rollIlaris(numDice ? numDice : DEFAULT_NUM_ILARIS_DICE, numSides ? numSides : DEFAULT_NUM_SIDES, ctx.parser.luck);
         } else if (ctx.op.type === RollParser.SHADOWRUN_DICE) {
-            return rollShadowrun(numDice ? numDice : DEFAULT_NUM_DICE, numSides ? numSides : DEFAULT_NUM_SHADOWRUN_SIDES);
+            return rollShadowrun(numDice ? numDice : DEFAULT_NUM_DICE, numSides ? numSides : DEFAULT_NUM_SHADOWRUN_SIDES, ctx.parser.luck);
         } else if (ctx.op.type === RollParser.HITZONE_DICE) {
             return rollHitzone(numDice ? numDice : DEFAULT_NUM_DICE);
         } else {
-            return rollDice(numDice ? numDice : DEFAULT_NUM_DICE, numSides ? numSides : DEFAULT_NUM_SIDES);
+            return rollDice(numDice ? numDice : DEFAULT_NUM_DICE, numSides ? numSides : DEFAULT_NUM_SIDES, ctx.parser.luck);
         }
     }
 
@@ -150,11 +160,11 @@ class Visitor extends RollVisitor {
 
 }
 
-function rollIlaris(numDice = 3, numSides = 20) {
+function rollIlaris(numDice = 3, numSides = 20, withLuck = LUCK_STATE.DEFAULT) {
     let results = [];
 
     for (let i = 0; i < numDice; i++) {
-        results.push(rollSingleDie(numSides));
+        results.push(rollSingleDie(numSides, withLuck));
     }
 
     let result;
@@ -182,13 +192,13 @@ function rollIlaris(numDice = 3, numSides = 20) {
     };
 }
 
-function rollShadowrun(numDice = 1, numSides = 6) {
+function rollShadowrun(numDice = 1, numSides = 6, withLuck = LUCK_STATE.DEFAULT) {
     let results = [];
     let hits = 0;
     let ones = 0;
 
     for (let i = 0; i < numDice; i++) {
-        const diceRoll = rollSingleDie(numSides);
+        const diceRoll = rollSingleDie(numSides, withLuck);
         if (diceRoll >= 5) {
             hits++;
             results.push(`**${diceRoll}**`);
@@ -216,11 +226,11 @@ function rollShadowrun(numDice = 1, numSides = 6) {
     };
 }
 
-function rollDice(numDice = 3, numSides = 20) {
+function rollDice(numDice = 3, numSides = 20, withLuck = LUCK_STATE.DEFAULT) {
     let results = [];
 
     for (let i = 0; i < numDice; i++) {
-        results.push(rollSingleDie(numSides));
+        results.push(rollSingleDie(numSides, withLuck));
     }
 
     let result;
@@ -304,8 +314,19 @@ function rollHitzone(numDice = 1) {
     };
 }
 
-function rollSingleDie(numSides) {
-    return crypto.randomInt(1, numSides + 1);
+function rollSingleDie(numSides, withLuck = LUCK_STATE.DEFAULT) {
+    let result = crypto.randomInt(1, numSides + 1);
+
+    if (withLuck === LUCK_STATE.HIGH && result <= numSides * luckThreshold) {
+        console.log("Re-roll due to high luck");
+        return crypto.randomInt(1, numSides + 1);
+    }
+    if (withLuck === LUCK_STATE.LOW && result > numSides * luckThreshold) {
+        console.log("Re-roll due to low luck");
+        return crypto.randomInt(1, numSides + 1);
+    }
+
+    return result;
 }
 
 function sortDescending(a, b) {
@@ -339,10 +360,20 @@ module.exports = {
         parser.addErrorListener(oErrorListener);
         parser.buildParseTrees = true;
 
+
         const tree = parser.start();
 
         if (valid) {
             try {
+                const activeChannel = GM.getActiveChannel(msg.author.id);
+                if (activeChannel && GM.isGM(activeChannel.id, msg.author.id)) {
+                    if (!GM.isActiveGM(msg.channel.id, msg.author.id)) {
+                        activeChannel.send("The Game Master is rolling dice in secret");
+                    }
+                    parser.luck = gmLuck;
+                } else {
+                    parser.luck = playerLuck;
+                }
                 const result = new Visitor().visit(tree);
                 const reply = `${result.command} rolled to ${result.message} = **${result.value}**`;
                 console.log(reply);
@@ -355,13 +386,6 @@ module.exports = {
                         }
                     }
                 );
-
-                const activeChannel = GM.getActiveChannel(msg.author.id);
-
-                if (activeChannel && GM.isGM(activeChannel.id, msg.author.id,) && !GM.isActiveGM(msg.channel.id, msg.author.id)) {
-                    activeChannel.send("The Game Master is rolling dice in secret");
-                }
-
 
             } catch (e) {
                 if (e.message) {
@@ -377,6 +401,24 @@ module.exports = {
             console.log(`Invalid syntax "${args}"`);
 
         }
+    },
+    updateLuck(playerLuckState, gmLuckState, lckTreshold) {
+        playerLuck = playerLuckState?.toLowerCase();
+        gmLuck = gmLuckState?.toLowerCase();
+
+        try {
+            luckThreshold = lckTreshold ? parseFloat(lckTreshold) : 0.5;
+        } catch (e) {
+            console.warn("Invalid luck threshold. Defaulting to 0.5");
+            luckThreshold = 0.5;
+        }
+
+        if (playerLuck?.trim() === "")
+            playerLuck=LUCK_STATE.DEFAULT;
+        if (gmLuck?.trim() === "")
+            gmLuck=LUCK_STATE.DEFAULT;
+
+        console.info(`Luck has turned! Player's luck is ${playerLuck ?? "default"}, GM's luck is ${gmLuck ?? "default"}. Threshold is at ${luckThreshold} `);
     }
 
 };
