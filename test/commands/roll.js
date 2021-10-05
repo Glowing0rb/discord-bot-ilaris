@@ -1,8 +1,9 @@
-const assert = require("assert");
-const sinon = require("sinon");
-const crypto = require('crypto');
-const Roll = require("../../app/commands/roll");
-const GM = require("../../app/commands/gm");
+import assert from "assert";
+import sinon from "sinon";
+import crypto from "crypto";
+
+import Roll from "../../app/commands/roll.js";
+import GM from "../../app/commands/gm.js";
 
 let sandbox;
 const SUCCESS = ":white_check_mark:";

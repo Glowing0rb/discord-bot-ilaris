@@ -1,7 +1,7 @@
 let channels = {};
 let gms = {};
 
-module.exports = {
+export default {
     name: "gm",
     aliases: ["sl", "/gm", "/sl"],
     description: "game master settings for current channel",

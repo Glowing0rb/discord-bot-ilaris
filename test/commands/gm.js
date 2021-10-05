@@ -1,6 +1,6 @@
-const assert = require("assert");
-const GM = require("../../app/commands/gm");
+import assert from "assert";
 
+import GM from "../../app/commands/gm.js";
 
 const USER1 = {
     id: "u123",

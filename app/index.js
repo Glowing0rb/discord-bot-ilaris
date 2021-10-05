@@ -1,9 +1,11 @@
-require("dotenv").config();
-const Discord = require("discord.js");
+import {config} from "dotenv";
+import Discord from "discord.js";
+
+import botCommands from "./commands/commands.js";
+
+config();
 const bot = new Discord.Client();
 bot.commands = new Discord.Collection();
-const botCommands = require("./commands");
-
 let defaultCommand;
 
 Object.keys(botCommands).map(key => {

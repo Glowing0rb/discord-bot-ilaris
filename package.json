@@ -2,7 +2,8 @@
   "name": "discord-bot-ilaris",
   "version": "1.1.1",
   "description": "Discord bot for Ilaris and other RPGs",
-  "main": "app/index.js",
+  "type": "module",
+  "exports": "./app/index.js",
   "scripts": {
     "test": "mocha --recursive",
     "start": "node app"
@@ -12,12 +13,15 @@
   },
   "license": "MIT",
   "dependencies": {
-    "antlr4": "^4.8.0",
+    "antlr4": "^4.9.2",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0"
   },
   "devDependencies": {
-    "mocha": "^8.0.1",
+    "mocha": "^9.1.2",
     "sinon": "^9.0.2"
+  },
+  "engines": {
+    "node": ">=14.10.0"
   }
 }

@@ -1,8 +1,11 @@
-const antlr4 = require("antlr4/index.js");
-const crypto = require('crypto');
-const RollLexer = require("./roll/RollLexer.js").RollLexer;
-const RollParser = require("./roll/RollParser.js").RollParser;
-const RollVisitor = require("./roll/RollVisitor.js").RollVisitor;
+import antlr4 from "antlr4";
+import crypto from "crypto";
+
+import RollLexer from "./roll/RollLexer.js";
+import RollParser from "./roll/RollParser.js";
+import RollVisitor from "./roll/RollVisitor.js";
+
+import GM from "./gm.js";
 
 const DEFAULT_NUM_DICE = 1;
 const DEFAULT_NUM_ILARIS_DICE = 3;
@@ -16,8 +19,6 @@ const SUCCESS = ":white_check_mark:";
 const FAIL = ":x:";
 
 const TOO_LONG = "this is a bit too much for me!";
-
-const GM = require("./gm")
 
 class Visitor extends RollVisitor {
 
@@ -312,7 +313,7 @@ function sortDescending(a, b) {
     return b - a;
 }
 
-module.exports = {
+export default {
     name: "roll",
     aliases: ["r", "/roll", "/r"],
     description: "rolls dice",

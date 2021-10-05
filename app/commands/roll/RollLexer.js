@@ -1,13 +1,13 @@
-// Generated from C:/Users/Fabian/OneDrive/WebstormProjects/discord-bot-ilaris/grammar\Roll.g4 by ANTLR 4.8
+// Generated from C:/Users/Fabian/OneDrive/WebstormProjects/discord-bot-ilaris/grammar\Roll.g4 by ANTLR 4.9.1
 // jshint ignore: start
-var antlr4 = require('antlr4/index');
+import antlr4 from 'antlr4';
 
 
 
-var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
-    "\u0002\u0011J\b\u0001\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004",
-    "\u0004\t\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t",
-    "\u0007\u0004\b\t\b\u0004\t\t\t\u0004\n\t\n\u0004\u000b\t\u000b\u0004",
+const serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786",
+    "\u5964\u0002\u0011J\b\u0001\u0004\u0002\t\u0002\u0004\u0003\t\u0003",
+    "\u0004\u0004\t\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007",
+    "\t\u0007\u0004\b\t\b\u0004\t\t\t\u0004\n\t\n\u0004\u000b\t\u000b\u0004",
     "\f\t\f\u0004\r\t\r\u0004\u000e\t\u000e\u0004\u000f\t\u000f\u0004\u0010",
     "\t\u0010\u0003\u0002\u0003\u0002\u0003\u0003\u0003\u0003\u0003\u0004",
     "\u0003\u0004\u0003\u0005\u0003\u0005\u0003\u0006\u0006\u0006+\n\u0006",
@@ -53,24 +53,34 @@ var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
     "\u0002"].join("");
 
 
-var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
+const atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
 
-var decisionsToDFA = atn.decisionToState.map( function(ds, index) { return new antlr4.dfa.DFA(ds, index); });
+const decisionsToDFA = atn.decisionToState.map( (ds, index) => new antlr4.dfa.DFA(ds, index) );
 
-function RollLexer(input) {
-	antlr4.Lexer.call(this, input);
-    this._interp = new antlr4.atn.LexerATNSimulator(this, atn, decisionsToDFA, new antlr4.PredictionContextCache());
-    return this;
+export default class RollLexer extends antlr4.Lexer {
+
+    static grammarFileName = "Roll.g4";
+    static channelNames = [ "DEFAULT_TOKEN_CHANNEL", "HIDDEN" ];
+	static modeNames = [ "DEFAULT_MODE" ];
+	static literalNames = [ null, null, null, null, null, null, "'+'", "'-'", 
+                         null, "'>='", "'<='", "'>'", "'<'", "'=='", "'('", 
+                         "')'" ];
+	static symbolicNames = [ null, "SHADOWRUN_DICE", "ILARIS_DICE", "DEFAULT_DICE", 
+                          "HITZONE_DICE", "INT", "ADD", "SUB", "WS", "GE", 
+                          "LE", "GT", "LT", "EQ", "OPENING_BRACKETS", "CLOSING_BRACKETS" ];
+	static ruleNames = [ "SHADOWRUN_DICE", "ILARIS_DICE", "DEFAULT_DICE", "HITZONE_DICE", 
+                      "INT", "ADD", "SUB", "WS", "GE", "LE", "GT", "LT", 
+                      "EQ", "OPENING_BRACKETS", "CLOSING_BRACKETS" ];
+
+    constructor(input) {
+        super(input)
+        this._interp = new antlr4.atn.LexerATNSimulator(this, atn, decisionsToDFA, new antlr4.PredictionContextCache());
+    }
+
+    get atn() {
+        return atn;
+    }
 }
-
-RollLexer.prototype = Object.create(antlr4.Lexer.prototype);
-RollLexer.prototype.constructor = RollLexer;
-
-Object.defineProperty(RollLexer.prototype, "atn", {
-        get : function() {
-                return atn;
-        }
-});
 
 RollLexer.EOF = antlr4.Token.EOF;
 RollLexer.SHADOWRUN_DICE = 1;
@@ -89,26 +99,5 @@ RollLexer.EQ = 13;
 RollLexer.OPENING_BRACKETS = 14;
 RollLexer.CLOSING_BRACKETS = 15;
 
-RollLexer.prototype.channelNames = [ "DEFAULT_TOKEN_CHANNEL", "HIDDEN" ];
 
-RollLexer.prototype.modeNames = [ "DEFAULT_MODE" ];
-
-RollLexer.prototype.literalNames = [ null, null, null, null, null, null, 
-                                     "'+'", "'-'", null, "'>='", "'<='", 
-                                     "'>'", "'<'", "'=='", "'('", "')'" ];
-
-RollLexer.prototype.symbolicNames = [ null, "SHADOWRUN_DICE", "ILARIS_DICE", 
-                                      "DEFAULT_DICE", "HITZONE_DICE", "INT", 
-                                      "ADD", "SUB", "WS", "GE", "LE", "GT", 
-                                      "LT", "EQ", "OPENING_BRACKETS", "CLOSING_BRACKETS" ];
-
-RollLexer.prototype.ruleNames = [ "SHADOWRUN_DICE", "ILARIS_DICE", "DEFAULT_DICE", 
-                                  "HITZONE_DICE", "INT", "ADD", "SUB", "WS", 
-                                  "GE", "LE", "GT", "LT", "EQ", "OPENING_BRACKETS", 
-                                  "CLOSING_BRACKETS" ];
-
-RollLexer.prototype.grammarFileName = "Roll.g4";
-
-
-exports.RollLexer = RollLexer;
 
