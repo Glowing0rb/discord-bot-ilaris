@@ -6,8 +6,9 @@ import Roll from "../../app/commands/roll.js";
 import GM from "../../app/commands/gm.js";
 
 let sandbox;
-const SUCCESS = ":white_check_mark:";
-const FAIL = ":x:";
+const SUCCESS = " :white_check_mark:";
+const FAIL = " :x:";
+const WARNING = " :warning:";
 const ZONE_HEAD = ":neutral_face: ";
 const ZONE_CHEST = ":shirt: ";
 const ZONE_ARMS = ":muscle: ";
@@ -66,7 +67,7 @@ describe("Roll Command", () => {
     it("should roll add 2 1i20", () => {
         assert.strictEqual(
             fudgeRoll("1i + 1i", [7, 6]),
-            constructExpectedAnswer("1i20+1i20", "[**7**]+[**6**]", 13)
+            constructExpectedAnswer("1i+1i", "[**7**]+[**6**]", 13)
         );
     });
 
@@ -80,21 +81,28 @@ describe("Roll Command", () => {
     it("should roll 3i + 9", () => {
         assert.strictEqual(
             fudgeRoll("i +9", [3, 1, 4]),
-            constructExpectedAnswer("3i20+9", "[4,**3**,1]+9", 12)
+            constructExpectedAnswer("3i+9", "[4,**3**,1]+9", 12)
         );
     });
 
     it("should roll 1s", () => {
         assert.strictEqual(
             fudgeRoll("1s", [3]),
-            constructExpectedAnswer("1s6", "[3]", 0)
+            constructExpectedAnswer("1s", "[3]", 0)
         );
     });
 
     it("should roll 5s", () => {
         assert.strictEqual(
             fudgeRoll("5s", [3, 1, 1, 5, 6]),
-            constructExpectedAnswer("5s6", "[3,__1__,__1__,**5**,**6**]", 2)
+            constructExpectedAnswer("5s", "[3,__1__,__1__,**5**,**6**]", 2)
+        );
+    });
+
+    it("should detect a glitch while rolling 5s", () => {
+        assert.strictEqual(
+            fudgeRoll("5s", [1, 1, 1, 5, 6]),
+            constructExpectedAnswer("5s", "[__1__,__1__,__1__,**5**,**6**] :interrobang:", 2)
         );
     });
 
@@ -115,10 +123,17 @@ describe("Roll Command", () => {
         );
     });
 
-    it("should detect a glitch while rolling 5s", () => {
+    it("should roll 1b", () => {
         assert.strictEqual(
-            fudgeRoll("5s", [1, 1, 1, 5, 6]),
-            constructExpectedAnswer("5s6", "[__1__,__1__,__1__,**5**,**6**] :interrobang:", 2)
+            fudgeRoll("1b", [4]),
+            constructExpectedAnswer("1b", "[**4**]" + WARNING, 4)
+        );
+    });
+
+    it("should roll 0b", () => {
+        assert.strictEqual(
+            fudgeRoll("0b", [6,1]),
+            constructExpectedAnswer("0b", "[6,**1**]" + FAIL, 1)
         );
     });
 
@@ -148,11 +163,11 @@ describe("Roll Command", () => {
     it("should do a ilaris check", () => {
         assert.strictEqual(
             fudgeRoll("i+9 >= 16", [3, 1, 4]),
-            constructExpectedAnswer("3i20+9>=16", "[4,**3**,1]+9>=16", FAIL)
+            constructExpectedAnswer("3i+9>=16", "[4,**3**,1]+9>=16", FAIL)
         );
         assert.strictEqual(
             fudgeRoll("i+9 >= 16", [8, 1, 9]),
-            constructExpectedAnswer("3i20+9>=16", "[9,**8**,1]+9>=16", SUCCESS)
+            constructExpectedAnswer("3i+9>=16", "[9,**8**,1]+9>=16", SUCCESS)
         );
     });
 

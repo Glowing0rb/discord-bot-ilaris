@@ -5,7 +5,7 @@ import RollVisitor from './RollVisitor.js';
 
 
 const serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786",
-    "\u5964\u0003\u0011<\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004",
+    "\u5964\u0003\u0012<\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004",
     "\t\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007",
     "\u0003\u0002\u0003\u0002\u0003\u0002\u0003\u0002\u0005\u0002\u0013\n",
     "\u0002\u0003\u0002\u0003\u0002\u0003\u0003\u0003\u0003\u0005\u0003\u0019",
@@ -15,8 +15,8 @@ const serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786",
     "\u0005\u0005\u0005-\n\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0003",
     "\u0005\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0007\u0005",
     "\u00078\n\u0007\u0003\u0007\u0003\u0007\u0003\u0007\u0002\u0003\u0004",
-    "\b\u0002\u0004\u0006\b\n\f\u0002\u0005\u0003\u0002\u0003\u0005\u0003",
-    "\u0002\b\t\u0003\u0002\u000b\u000f\u0002>\u0002\u0012\u0003\u0002\u0002",
+    "\b\u0002\u0004\u0006\b\n\f\u0002\u0005\u0003\u0002\u0003\u0006\u0003",
+    "\u0002\t\n\u0003\u0002\f\u0010\u0002>\u0002\u0012\u0003\u0002\u0002",
     "\u0002\u0004\u001f\u0003\u0002\u0002\u0002\u0006)\u0003\u0002\u0002",
     "\u0002\b,\u0003\u0002\u0002\u0002\n2\u0003\u0002\u0002\u0002\f7\u0003",
     "\u0002\u0002\u0002\u000e\u0013\u0005\n\u0006\u0002\u000f\u0013\u0005",
@@ -34,14 +34,14 @@ const serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786",
     "\u0002\u0002 &\u0003\u0002\u0002\u0002!\"\f\u0004\u0002\u0002\"#\t\u0003",
     "\u0002\u0002#%\u0005\u0004\u0003\u0005$!\u0003\u0002\u0002\u0002%(\u0003",
     "\u0002\u0002\u0002&$\u0003\u0002\u0002\u0002&\'\u0003\u0002\u0002\u0002",
-    "\'\u0005\u0003\u0002\u0002\u0002(&\u0003\u0002\u0002\u0002)*\u0007\u0007",
+    "\'\u0005\u0003\u0002\u0002\u0002(&\u0003\u0002\u0002\u0002)*\u0007\b",
     "\u0002\u0002*\u0007\u0003\u0002\u0002\u0002+-\u0005\u0006\u0004\u0002",
     ",+\u0003\u0002\u0002\u0002,-\u0003\u0002\u0002\u0002-.\u0003\u0002\u0002",
-    "\u0002./\u0007\u0010\u0002\u0002/0\u0005\n\u0006\u000201\u0007\u0011",
+    "\u0002./\u0007\u0011\u0002\u0002/0\u0005\n\u0006\u000201\u0007\u0012",
     "\u0002\u00021\t\u0003\u0002\u0002\u000223\u0005\u0004\u0003\u000234",
     "\t\u0004\u0002\u000245\u0005\u0004\u0003\u00025\u000b\u0003\u0002\u0002",
     "\u000268\u0005\u0006\u0004\u000276\u0003\u0002\u0002\u000278\u0003\u0002",
-    "\u0002\u000289\u0003\u0002\u0002\u00029:\u0007\u0006\u0002\u0002:\r",
+    "\u0002\u000289\u0003\u0002\u0002\u00029:\u0007\u0007\u0002\u0002:\r",
     "\u0003\u0002\u0002\u0002\t\u0012\u0018\u001c\u001f&,7"].join("");
 
 
@@ -54,13 +54,13 @@ const sharedContextCache = new antlr4.PredictionContextCache();
 export default class RollParser extends antlr4.Parser {
 
     static grammarFileName = "Roll.g4";
-    static literalNames = [ null, null, null, null, null, null, "'+'", "'-'", 
-                            null, "'>='", "'<='", "'>'", "'<'", "'=='", 
+    static literalNames = [ null, null, null, null, null, null, null, "'+'", 
+                            "'-'", null, "'>='", "'<='", "'>'", "'<'", "'=='", 
                             "'('", "')'" ];
-    static symbolicNames = [ null, "SHADOWRUN_DICE", "ILARIS_DICE", "DEFAULT_DICE", 
-                             "HITZONE_DICE", "INT", "ADD", "SUB", "WS", 
-                             "GE", "LE", "GT", "LT", "EQ", "OPENING_BRACKETS", 
-                             "CLOSING_BRACKETS" ];
+    static symbolicNames = [ null, "BLADES_DICE", "SHADOWRUN_DICE", "ILARIS_DICE", 
+                             "DEFAULT_DICE", "HITZONE_DICE", "INT", "ADD", 
+                             "SUB", "WS", "GE", "LE", "GT", "LT", "EQ", 
+                             "OPENING_BRACKETS", "CLOSING_BRACKETS" ];
     static ruleNames = [ "start", "roll", "number", "multicheck", "check", 
                          "special" ];
 
@@ -177,7 +177,7 @@ export default class RollParser extends antlr4.Parser {
 	            this.state = 24;
 	            localctx.op = this._input.LT(1);
 	            _la = this._input.LA(1);
-	            if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << RollParser.SHADOWRUN_DICE) | (1 << RollParser.ILARIS_DICE) | (1 << RollParser.DEFAULT_DICE))) !== 0))) {
+	            if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << RollParser.BLADES_DICE) | (1 << RollParser.SHADOWRUN_DICE) | (1 << RollParser.ILARIS_DICE) | (1 << RollParser.DEFAULT_DICE))) !== 0))) {
 	                localctx.op = this._errHandler.recoverInline(this);
 	            }
 	            else {
@@ -383,21 +383,22 @@ export default class RollParser extends antlr4.Parser {
 }
 
 RollParser.EOF = antlr4.Token.EOF;
-RollParser.SHADOWRUN_DICE = 1;
-RollParser.ILARIS_DICE = 2;
-RollParser.DEFAULT_DICE = 3;
-RollParser.HITZONE_DICE = 4;
-RollParser.INT = 5;
-RollParser.ADD = 6;
-RollParser.SUB = 7;
-RollParser.WS = 8;
-RollParser.GE = 9;
-RollParser.LE = 10;
-RollParser.GT = 11;
-RollParser.LT = 12;
-RollParser.EQ = 13;
-RollParser.OPENING_BRACKETS = 14;
-RollParser.CLOSING_BRACKETS = 15;
+RollParser.BLADES_DICE = 1;
+RollParser.SHADOWRUN_DICE = 2;
+RollParser.ILARIS_DICE = 3;
+RollParser.DEFAULT_DICE = 4;
+RollParser.HITZONE_DICE = 5;
+RollParser.INT = 6;
+RollParser.ADD = 7;
+RollParser.SUB = 8;
+RollParser.WS = 9;
+RollParser.GE = 10;
+RollParser.LE = 11;
+RollParser.GT = 12;
+RollParser.LT = 13;
+RollParser.EQ = 14;
+RollParser.OPENING_BRACKETS = 15;
+RollParser.CLOSING_BRACKETS = 16;
 
 RollParser.RULE_start = 0;
 RollParser.RULE_roll = 1;
@@ -496,6 +497,10 @@ class RollDiceContext extends RollContext {
 
 	SHADOWRUN_DICE() {
 	    return this.getToken(RollParser.SHADOWRUN_DICE, 0);
+	};
+
+	BLADES_DICE() {
+	    return this.getToken(RollParser.BLADES_DICE, 0);
 	};
 
 	number = function(i) {

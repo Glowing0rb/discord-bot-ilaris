@@ -2,7 +2,7 @@ grammar Roll;
 
 start: (check|multicheck|roll|special) EOF;
 
-roll:    numDice=number? op=(ILARIS_DICE|DEFAULT_DICE|SHADOWRUN_DICE) numSides=number? #RollDice
+roll:    numDice=number? op=(ILARIS_DICE|DEFAULT_DICE|SHADOWRUN_DICE|BLADES_DICE) numSides=number? #RollDice
         | left=roll op=(ADD|SUB) right=roll #BonusMalus
         | number #Constant
         ;
@@ -15,6 +15,7 @@ check: left=roll op=(GE | LE | GT | LT | EQ) right=roll;
 
 special: numDice=number? HITZONE_DICE;
 
+BLADES_DICE: ('B' | 'b');
 SHADOWRUN_DICE: ('S' | 's');
 ILARIS_DICE: ('I'|'i');
 DEFAULT_DICE: ('W'|'w'|'D'|'d');

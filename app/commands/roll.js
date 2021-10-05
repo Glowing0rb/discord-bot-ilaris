@@ -11,12 +11,15 @@ const DEFAULT_NUM_DICE = 1;
 const DEFAULT_NUM_ILARIS_DICE = 3;
 const DEFAULT_NUM_SIDES = 20;
 const DEFAULT_NUM_SHADOWRUN_SIDES = 6;
+const DEFAULT_NUM_BLADES_SIDES = 6;
+const DEFAULT_NUM_ILARIS_SIDES = 20;
 
 const MARKER_CRIT = " :trophy:";
 const MARKER_FUMBLE = " :skull_crossbones:";
 const MARKER_GLITCH = " :interrobang:";
-const SUCCESS = ":white_check_mark:";
-const FAIL = ":x:";
+const SUCCESS = " :white_check_mark:";
+const WARNING = " :warning:";
+const FAIL = " :x:";
 
 const TOO_LONG = "this is a bit too much for me!";
 
@@ -68,13 +71,15 @@ class Visitor extends RollVisitor {
         }
 
         if (ctx.op.type === RollParser.ILARIS_DICE) {
-            return rollIlaris(numDice ? numDice : DEFAULT_NUM_ILARIS_DICE, numSides ? numSides : DEFAULT_NUM_SIDES);
+            return rollIlaris(numDice === undefined ? DEFAULT_NUM_ILARIS_DICE : numDice, DEFAULT_NUM_ILARIS_SIDES);
         } else if (ctx.op.type === RollParser.SHADOWRUN_DICE) {
-            return rollShadowrun(numDice ? numDice : DEFAULT_NUM_DICE, numSides ? numSides : DEFAULT_NUM_SHADOWRUN_SIDES);
+            return rollShadowrun(numDice === undefined ? DEFAULT_NUM_DICE : numDice, DEFAULT_NUM_SHADOWRUN_SIDES);
+        } else if (ctx.op.type === RollParser.BLADES_DICE) {
+            return rollBlades(numDice === undefined ? DEFAULT_NUM_DICE : numDice, DEFAULT_NUM_BLADES_SIDES);
         } else if (ctx.op.type === RollParser.HITZONE_DICE) {
-            return rollHitzone(numDice ? numDice : DEFAULT_NUM_DICE);
+            return rollHitzone(numDice === undefined ? DEFAULT_NUM_DICE : numDice, DEFAULT_NUM_DICE);
         } else {
-            return rollDice(numDice ? numDice : DEFAULT_NUM_DICE, numSides ? numSides : DEFAULT_NUM_SIDES);
+            return rollDice(numDice === undefined ? DEFAULT_NUM_DICE : numDice, numSides ? numSides : DEFAULT_NUM_SIDES);
         }
     }
 
@@ -151,7 +156,9 @@ class Visitor extends RollVisitor {
 
 }
 
-function rollIlaris(numDice = 3, numSides = 20) {
+function rollIlaris(numDice = 3) {
+    const numSides = DEFAULT_NUM_ILARIS_SIDES;
+
     let results = [];
 
     for (let i = 0; i < numDice; i++) {
@@ -162,28 +169,30 @@ function rollIlaris(numDice = 3, numSides = 20) {
     if (numDice > 2) {
         result = results.sort(sortDescending)[1];
         results[1] = `**${results[1]}**`;
-    } else { // if one or two ilaris dice are thrown, take the best one
+    } else if (numDice === 1) { // if one or two ilaris dice are thrown, take the best one
         result = results[0];
         results[0] = `**${results[0]}**`;
+    } else {
+        result = 0;
     }
 
     let marker = "";
-    if (numSides > 1) {
-        if (result === 1) {
-            marker = MARKER_FUMBLE;
-        } else if (result === numSides) {
-            marker = MARKER_CRIT;
-        }
+
+    if (result === 1) {
+        marker = MARKER_FUMBLE;
+    } else if (result === numSides) {
+        marker = MARKER_CRIT;
     }
 
     return {
         message: `[${results}]${marker}`,
         value: result,
-        command: `${numDice}i${numSides}`
+        command: `${numDice}i`
     };
 }
 
-function rollShadowrun(numDice = 1, numSides = 6) {
+function rollShadowrun(numDice = 1) {
+    const numSides = DEFAULT_NUM_SHADOWRUN_SIDES;
     let results = [];
     let hits = 0;
     let ones = 0;
@@ -213,7 +222,58 @@ function rollShadowrun(numDice = 1, numSides = 6) {
     return {
         message: `[${results.toString()}]${marker}`,
         value: hits,
-        command: `${numDice}s${numSides}`
+        command: `${numDice}s`
+    };
+}
+
+function rollBlades(numDice = 1) {
+    const numSides = DEFAULT_NUM_BLADES_SIDES;
+    let results = [];
+
+    let result;
+    let resultIndex;
+
+    if (numDice > 0) {
+        result = 0;
+        for (let i = 0; i < numDice; i++) {
+            const diceRoll = rollSingleDie(numSides);
+            results.push(`${diceRoll}`);
+            if (diceRoll > result) {
+                result = diceRoll;
+                resultIndex = i;
+            }
+        }
+    } else { // no dice, throw 2 and use the lower one
+        result = 6;
+        for (let i = 0; i < 2; i++) {
+            const diceRoll = rollSingleDie(numSides);
+            results.push(`${diceRoll}`);
+            if (diceRoll <= result) {
+                result = diceRoll;
+                resultIndex = i;
+            }
+        }
+    }
+
+    results[resultIndex] = `**${result}**`
+
+    let marker;
+    switch (result) {
+        case 6:
+            marker = SUCCESS;
+            break;
+        case 5:
+        case 4:
+            marker = WARNING;
+            break;
+        default:
+            marker = FAIL;
+    }
+
+    return {
+        message: `[${results.toString()}]${marker}`,
+        value: result,
+        command: `${numDice}b`
     };
 }
 
@@ -232,9 +292,12 @@ function rollDice(numDice = 3, numSides = 20) {
             return total + current;
         }, 0);
         message = `[${results.join("+")}=**${result}**]`;
-    } else {
+    } else if (numDice === 1) {
         result = results[0];
         message = `[**${result}**]`;
+    } else {
+        result = 0;
+        message = `[** **]`
     }
 
     return {
@@ -252,6 +315,7 @@ function rollHitzone(numDice = 1) {
     const ZONE_ARMS = ":muscle: ";
     const ZONE_STOMACH = ":shorts: ";
     const ZONE_LEGS = ":leg: ";
+    const ZONE_NOTHING = ":no_entry_sign:";
 
     const hits = {};
     hits[ZONE_HEAD] = 0;
@@ -295,8 +359,10 @@ function rollHitzone(numDice = 1) {
             + ZONE_ARMS + ": " + hits[ZONE_ARMS] + ", "
             + ZONE_STOMACH + ": " + hits[ZONE_STOMACH] + ", "
             + ZONE_LEGS + ": " + hits[ZONE_ARMS];
-    } else {
+    } else if (numDice === 1) {
         value = results[0].zone;
+    } else {
+        value = ZONE_NOTHING;
     }
     return {
         message,

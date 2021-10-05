@@ -39,13 +39,15 @@ The bot also reacts to dice instructions without the preceding command (e.g.  ju
 Supported rolling instructions are:
 * ndm (e.g. `r 3d20`), this will roll n m-sided dice. n can be omitted and will default to 1.
 m can be omitted and will default to 20. i.e. `r d` is the same as `r 1d20`. This could be used for quickly rolling attacks. Alternative alias is nwm.
-* nim (e.g. `r 3i20`), this will roll n m-sided dice, but in ilaris-style (only the second highest die counts)
+* ni (e.g. `r 3i`), this will roll n 20-sided dice, but in ilaris-style (only the second highest die counts)
 n can be omitted and will default to 3.
-m can be omitted and will default to 20. i.e. `r i` is the same as `r 3i20`. This could be used for quickly rolling default ilaris checks.
-* nsm (e.g. `r 3s6`), this will roll n m-sided dice, but in shadowrun(5)-style (all dice greater than 4 count as hit).
+This could be used for quickly rolling default ilaris checks.
+* ns (e.g. `r 3s`), this will roll n 6-sided dice, but in shadowrun(5)-style (all dice greater than 4 count as hit).
 n can be omitted and will default to 1.
-m can (and usually should) be omitted and will default to 6. i.e. `r s` is the same as `r 1s6`.
-Additionally, fixed values can be added (e.g. `r 4i + 8`). This could be used to apply a bonus to a check.
+* nb (e.g. `r 3b`), this will roll n 6-sided dice, but in Blades In The Dark-style (only highest die counts. 6 is success, 4-5 mixed success, anything smaller is a failure).
+It is possible to specify to roll 0 dice (n=0). In this case, 2 dice will be rolled but only the lowest will be counted. n can be omitted and will default to 1.
+
+* Additionally, fixed values can be added (e.g. `r 4i + 8`). This could be used to apply a bonus to a check.
 
 #### Special rolls
 Additional the following roll can be performed, but no bonus values can be added 
