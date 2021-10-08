@@ -358,7 +358,7 @@ function rollHitzone(numDice = 1) {
             + ZONE_CHEST + ": " + hits[ZONE_CHEST] + ", "
             + ZONE_ARMS + ": " + hits[ZONE_ARMS] + ", "
             + ZONE_STOMACH + ": " + hits[ZONE_STOMACH] + ", "
-            + ZONE_LEGS + ": " + hits[ZONE_ARMS];
+            + ZONE_LEGS + ": " + hits[ZONE_LEGS];
     } else if (numDice === 1) {
         value = results[0].zone;
     } else {

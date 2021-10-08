@@ -113,6 +113,16 @@ describe("Roll Command", () => {
         );
     });
 
+    it("should roll 3z", () => {
+        assert.strictEqual(
+            fudgeRoll("3z", [20, 10, 17]),
+            constructExpectedAnswer(
+                "3z", "[20,10,17]",
+                ZONE_HEAD + ": 1, " + ZONE_CHEST + ": 1, " + ZONE_ARMS + ": 1, " + ZONE_STOMACH + ": 0, " + ZONE_LEGS + ": 0"
+            )
+        );
+    });
+
     it("should roll 5z", () => {
         assert.strictEqual(
             fudgeRoll("5z", [19, 15, 9, 7, 6]),
