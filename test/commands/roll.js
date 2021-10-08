@@ -14,6 +14,7 @@ const ZONE_CHEST = ":shirt: ";
 const ZONE_ARMS = ":muscle: ";
 const ZONE_STOMACH = ":shorts: ";
 const ZONE_LEGS = ":leg: ";
+const CRITICAL = " :trophy:";
 
 const USER = {
     id: "u123",
@@ -144,6 +145,20 @@ describe("Roll Command", () => {
         assert.strictEqual(
             fudgeRoll("0b", [6,1]),
             constructExpectedAnswer("0b", "[6,**1**]" + FAIL, 1)
+        );
+    });
+
+    it("should roll 2b", () => {
+        assert.strictEqual(
+            fudgeRoll("2b", [4,6]),
+            constructExpectedAnswer("2b", "[4,**6**]" + SUCCESS, 6)
+        );
+    });
+
+    it("should detect critical hits when rolling with b", () => {
+        assert.strictEqual(
+            fudgeRoll("3b", [6,4,6]),
+            constructExpectedAnswer("3b", "[**6**,4,6]" + CRITICAL, 6)
         );
     });
 

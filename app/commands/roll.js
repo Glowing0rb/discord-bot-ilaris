@@ -232,12 +232,15 @@ function rollBlades(numDice = 1) {
 
     let result;
     let resultIndex;
-
+    let isCritical;
     if (numDice > 0) {
         result = 0;
         for (let i = 0; i < numDice; i++) {
             const diceRoll = rollSingleDie(numSides);
             results.push(`${diceRoll}`);
+            if (diceRoll === numSides && result === numSides) { //more than one 6 was rolled
+                isCritical = true;
+            }
             if (diceRoll > result) {
                 result = diceRoll;
                 resultIndex = i;
@@ -260,7 +263,11 @@ function rollBlades(numDice = 1) {
     let marker;
     switch (result) {
         case 6:
-            marker = SUCCESS;
+            if (isCritical) {
+                marker = MARKER_CRIT;
+            } else {
+                marker = SUCCESS;
+            }
             break;
         case 5:
         case 4:
